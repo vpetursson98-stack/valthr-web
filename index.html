@@ -343,6 +343,9 @@
     </div>
 
     <form id="bookingForm">
+      <input type="hidden" name="access_key" value="f24ca79d-97f2-43ab-9431-af15294995e2">
+      <input type="hidden" name="subject" value="Ný bókunarfyrirspurn — VALTHR">
+      <input type="checkbox" name="botcheck" class="hidden-field" style="display:none">
       <div class="field">
         <label for="name">Nafn</label>
         <input type="text" id="name" name="name" required>
@@ -366,7 +369,7 @@
         <textarea id="message" name="message" placeholder="Dagsetning, staðsetning, lið/íþróttamaður og allt annað sem ég ætti að vita."></textarea>
       </div>
       <button type="submit" class="btn">Senda fyrirspurn</button>
-      <span class="form-note">Opnar tölvupóstforritið þitt með þessum upplýsingum útfylltum.</span>
+      <span class="form-note" id="formNote">Sent beint til mín — ég svara eins fljótt og ég get.</span>
     </form>
   </div>
 </section>
@@ -410,12 +413,40 @@
     gallery.appendChild(item);
   });
 
-  document.getElementById('bookingForm').addEventListener('submit', function (e) {
+  const bookingForm = document.getElementById('bookingForm');
+  const formNote = document.getElementById('formNote');
+  const formNoteDefault = formNote.textContent;
+
+  bookingForm.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const name = this.name.value, email = this.email.value, service = this.service.value, message = this.message.value;
-    const subject = encodeURIComponent(`Fyrirspurn um bókun — ${service}`);
-    const body = encodeURIComponent(`Nafn: ${name}\nNetfang: ${email}\nTegund myndatöku: ${service}\n\n${message}`);
-    window.location.href = `mailto:hello@valthr.com?subject=${subject}&body=${body}`;
+    if (this.botcheck.checked) return; // spam honeypot
+
+    const submitBtn = this.querySelector('button[type="submit"]');
+    this.subject.value = `Ný bókunarfyrirspurn — ${this.service.value}`;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sendi...';
+    formNote.textContent = formNoteDefault;
+    formNote.style.color = '';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(this)
+      });
+      const result = await res.json();
+      if (!result.success) throw new Error(result.message || 'Villa kom upp');
+
+      this.reset();
+      formNote.textContent = 'Takk fyrir! Fyrirspurnin er komin til mín og ég hef samband fljótlega.';
+    } catch (err) {
+      formNote.textContent = 'Eitthvað fór úrskeiðis — reyndu aftur eða sendu á hello@valthr.com.';
+      formNote.style.color = '#e05252';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Senda fyrirspurn';
+    }
   });
 </script>
 
