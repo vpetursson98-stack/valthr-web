@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VALTHR | Íþróttaljósmyndun</title>
+<meta name="description" content="VALTHR — íþróttaljósmyndun sem heldur í við leikinn. Myndasafn og bókanir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;
+    --black-soft:#121212;
+    --white:#f5f5f5;
+    --grey:#8a8a8a;
+    --grey-line:#262626;
+    --accent:#e8e8e8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.logo-text,.nav-links a,.btn{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.04em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .container{width:100%;max-width:1200px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    border-bottom:1px solid var(--grey-line);
+  }
+  /* blur lives on a pseudo-element, not on header itself, so header never becomes
+     the containing block for fixed-position descendants (a filter/backdrop-filter
+     on an element does that, which would break the full-viewport mobile nav panel) */
+  header::before{
+    content:'';position:absolute;inset:0;z-index:-1;
+    background:rgba(10,10,10,0.75);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 32px;max-width:1200px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:26px;width:auto;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{
+    font-size:18px;color:var(--white);position:relative;
+    transition:color .25s ease;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;
+    background:var(--white);transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--white);padding:8px 20px;font-size:16px;
+    transition:background .25s ease,color .25s ease;
+  }
+  .nav-cta:hover{background:var(--white);color:var(--black);}
+  .nav-toggle{display:none;background:none;border:0;color:var(--white);font-size:28px;cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;
+    justify-content:center;text-align:center;padding:140px 24px 80px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.06), transparent 45%),
+      radial-gradient(circle at 80% 80%, rgba(255,255,255,0.04), transparent 40%),
+      var(--black);
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 90px);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:900px;}
+  .eyebrow{
+    display:inline-block;font-size:13px;letter-spacing:0.35em;color:var(--grey);
+    text-transform:uppercase;margin-bottom:22px;font-family:'Inter',sans-serif;font-weight:600;
+  }
+  .hero h1{
+    font-size:clamp(56px,10vw,140px);line-height:0.92;color:var(--white);
+    text-transform:uppercase;
+  }
+  .hero h1 span{color:var(--grey);}
+  .hero p{
+    margin:26px auto 40px;max-width:560px;font-size:18px;color:var(--grey);
+    font-family:'Inter',sans-serif;line-height:1.6;
+  }
+  .hero-ctas{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:16px 34px;font-size:18px;border:1px solid var(--white);
+    transition:all .25s ease;
+  }
+  .btn-solid{background:var(--white);color:var(--black);}
+  .btn-solid:hover{background:transparent;color:var(--white);}
+  .btn-outline{color:var(--white);}
+  .btn-outline:hover{background:var(--white);color:var(--black);}
+  .scroll-cue{
+    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    font-size:12px;letter-spacing:0.3em;color:var(--grey);text-transform:uppercase;
+    font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .scroll-cue::after{
+    content:'';width:1px;height:40px;background:linear-gradient(var(--grey),transparent);
+    animation:scrollpulse 2s ease infinite;
+  }
+  @keyframes scrollpulse{0%{opacity:0.2;}50%{opacity:1;}100%{opacity:0.2;}}
+
+  /* SECTION HEADER */
+  .section{padding:120px 0;}
+  .section-head{margin-bottom:56px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+  .section-tag{font-size:13px;letter-spacing:0.35em;color:var(--grey);text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:14px;display:block;}
+  .section-head h2{font-size:clamp(38px,6vw,64px);text-transform:uppercase;line-height:1;}
+  .section-head p{color:var(--grey);max-width:380px;font-size:15px;line-height:1.6;}
+
+  /* PORTFOLIO */
+  #portfolio{background:var(--black-soft);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
+  .gallery{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  .gallery-item{
+    position:relative;aspect-ratio:4/5;overflow:hidden;
+    background:linear-gradient(160deg,#1c1c1c,#0d0d0d);
+    border:1px solid var(--grey-line);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .gallery-item:nth-child(3n+2){aspect-ratio:4/5;}
+  .gallery-item img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity .3s ease, transform .5s ease;
+  }
+  .gallery-item.has-img img{opacity:1;}
+  .gallery-item:hover img{transform:scale(1.06);}
+  .placeholder-mark{
+    text-align:center;color:var(--grey);font-family:'Inter',sans-serif;z-index:1;
+  }
+  .placeholder-mark .num{
+    font-family:'Bebas Neue',sans-serif;font-size:44px;color:#3a3a3a;display:block;letter-spacing:0.05em;
+  }
+  .placeholder-mark small{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;}
+  .gallery-overlay{
+    position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 55%);
+    display:flex;align-items:flex-end;padding:18px;opacity:0;transition:opacity .3s ease;z-index:2;
+  }
+  .gallery-item:hover .gallery-overlay{opacity:1;}
+  .gallery-overlay span{font-family:'Inter',sans-serif;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white);}
+
+  /* SERVICES STRIP */
+  .strip{
+    display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--grey-line);
+  }
+  .strip div{
+    padding:44px 32px;border-right:1px solid var(--grey-line);
+  }
+  .strip div:last-child{border-right:none;}
+  .strip h3{font-size:30px;text-transform:uppercase;margin-bottom:8px;}
+  .strip p{font-size:14px;color:var(--grey);font-family:'Inter',sans-serif;line-height:1.6;}
+
+  /* CONTACT */
+  #contact .container{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:start;
+  }
+  .contact-info h2{font-size:clamp(38px,6vw,64px);text-transform:uppercase;line-height:1;margin-bottom:20px;}
+  .contact-info p{color:var(--grey);font-size:16px;line-height:1.7;max-width:440px;margin-bottom:36px;}
+  .contact-detail{margin-bottom:22px;}
+  .contact-detail span{display:block;font-size:12px;letter-spacing:0.25em;color:var(--grey);text-transform:uppercase;margin-bottom:6px;font-family:'Inter',sans-serif;}
+  .contact-detail a,.contact-detail p{font-size:22px;font-family:'Bebas Neue',sans-serif;letter-spacing:0.03em;}
+  .contact-detail a:hover{color:var(--grey);}
+
+  form{display:flex;flex-direction:column;gap:20px;}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field label{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);font-family:'Inter',sans-serif;}
+  .field input,.field select,.field textarea{
+    background:transparent;border:none;border-bottom:1px solid var(--grey-line);
+    padding:12px 2px;color:var(--white);font-family:'Inter',sans-serif;font-size:16px;
+    transition:border-color .25s ease;
+  }
+  .field select{appearance:none;-webkit-appearance:none;}
+  .field select option{background:var(--black-soft);color:var(--white);}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--white);}
+  .field textarea{resize:vertical;min-height:100px;}
+  form .btn{align-self:flex-start;margin-top:6px;background:var(--white);color:var(--black);border:1px solid var(--white);cursor:pointer;font-size:18px;}
+  form .btn:hover{background:transparent;color:var(--white);}
+  .form-note{font-size:12px;color:var(--grey);font-family:'Inter',sans-serif;margin-top:-6px;}
+
+  footer{
+    border-top:1px solid var(--grey-line);padding:36px 0;
+  }
+  .footer-inner{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  }
+  .footer-inner img{height:18px;}
+  .footer-links{display:flex;gap:26px;font-family:'Inter',sans-serif;font-size:13px;color:var(--grey);}
+  .footer-links a:hover{color:var(--white);}
+  .copyright{font-family:'Inter',sans-serif;font-size:13px;color:var(--grey);}
+
+  @media (max-width:860px){
+    .nav-links{
+      position:fixed;top:60px;left:0;right:0;bottom:0;background:var(--black);
+      flex-direction:column;justify-content:flex-start;padding:50px 32px;gap:30px;
+      transform:translateX(100%);transition:transform .3s ease;
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-links a{font-size:26px;}
+    .nav-toggle{display:block;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .strip{grid-template-columns:repeat(2,1fr);}
+    .strip div{border-bottom:1px solid var(--grey-line);}
+    #contact .container{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .gallery{grid-template-columns:1fr;}
+    .strip{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="brand"><img src="assets/logo.jpg" alt="VALTHR"></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#portfolio">Myndasafn</a>
+      <a href="#services">Þjónusta</a>
+      <a href="#contact" class="nav-cta">Bóka tíma</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Opna valmynd">&#9776;</button>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <span class="eyebrow">Íþróttaljósmyndun</span>
+    <h1>FRYSTU<br><span>AUGNABLIKIÐ.</span></h1>
+    <p>VALTHR fangar augnablikin sem skipta máli — tilfinningarnar, stemninguna og sögurnar sem verða til á vellinum.</p>
+    <div class="hero-ctas">
+      <a href="#portfolio" class="btn btn-solid">Skoða myndasafn</a>
+      <a href="#contact" class="btn btn-outline">Bóka myndatöku</a>
+    </div>
+  </div>
+  <div class="scroll-cue">Skruna</div>
+</section>
+
+<section class="section" id="portfolio">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Úrval verka</span>
+        <h2>Myndasafn</h2>
+      </div>
+      <p>Myndir úr leikjum, liðsmyndir og viðburðaumfjöllun — sýnishorn af nýlegum verkefnum.</p>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Það sem ég mynda</span>
+        <h2>Þjónusta</h2>
+      </div>
+    </div>
+  </div>
+  <div class="strip">
+    <div><h3>Leikdagur</h3><p>Íþróttaljósmyndun á leikjum — hasar, tilfinningar og augnablik sem fanga stemninguna á vellinum.</p></div>
+    <div><h3>Liðsmyndir</h3><p>Leikmannahópar, andlitsmyndir og hópmyndir fyrir lið, félög og fyrirtæki.</p></div>
+    <div><h3>Mót</h3><p>Myndataka á mótum og keppnum, frá upphafi til enda.</p></div>
+    <div><h3>Einstaklingsmyndir</h3><p>Sérsniðnar myndatökur fyrir leikmenn, umboðsmenn og styrktaraðila.</p></div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-info">
+      <span class="section-tag">Hafðu samband</span>
+      <h2>Bóka myndatöku</h2>
+      <p>Er leikur, mót eða myndatökutími fram undan? Sendu upplýsingarnar og ég hef samband.</p>
+
+      <div class="contact-detail">
+        <span>Netfang</span>
+        <a href="mailto:hello@valthr.com">hello@valthr.com</a>
+      </div>
+      <div class="contact-detail">
+        <span>Sími</span>
+        <a href="tel:8237412">823-7412</a>
+      </div>
+      <div class="contact-detail">
+        <span>Vefur</span>
+        <a href="https://valthr.com" target="_blank" rel="noopener">valthr.com</a>
+      </div>
+    </div>
+
+    <form id="bookingForm">
+      <div class="field">
+        <label for="name">Nafn</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Netfang</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="field">
+        <label for="service">Tegund myndatöku</label>
+        <select id="service" name="service">
+          <option>Leikdagur</option>
+          <option>Liðsmyndir</option>
+          <option>Mót</option>
+          <option>Einstaklingsmyndir</option>
+          <option>Annað</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Nánar</label>
+        <textarea id="message" name="message" placeholder="Dagsetning, staðsetning, lið/íþróttamaður og allt annað sem ég ætti að vita."></textarea>
+      </div>
+      <button type="submit" class="btn">Senda fyrirspurn</button>
+      <span class="form-note">Opnar tölvupóstforritið þitt með þessum upplýsingum útfylltum.</span>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <img src="assets/logo.jpg" alt="VALTHR">
+    <div class="footer-links">
+      <a href="#portfolio">Myndasafn</a>
+      <a href="#services">Þjónusta</a>
+      <a href="#contact">Samband</a>
+    </div>
+    <span class="copyright">&copy; <span id="year"></span> VALTHR. Öll réttindi áskilin.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const photos = [
+    "assets/portfolio/01.jpg", "assets/portfolio/02.jpg", "assets/portfolio/03.jpg",
+    "assets/portfolio/04.jpg", "assets/portfolio/05.jpg", "assets/portfolio/06.jpg",
+    "assets/portfolio/07.jpg", "assets/portfolio/08.jpg", "assets/portfolio/09.jpg"
+  ];
+  const gallery = document.getElementById('gallery');
+  photos.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item' + (src ? ' has-img' : '');
+    if (src) {
+      item.innerHTML = `<img src="${src}" alt="VALTHR mynd ${i + 1}">
+        <div class="gallery-overlay"><span>Skoða</span></div>`;
+    } else {
+      item.innerHTML = `<div class="placeholder-mark"><span class="num">${String(i + 1).padStart(2, '0')}</span><small>Bæta við mynd</small></div>`;
+    }
+    gallery.appendChild(item);
+  });
+
+  document.getElementById('bookingForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = this.name.value, email = this.email.value, service = this.service.value, message = this.message.value;
+    const subject = encodeURIComponent(`Fyrirspurn um bókun — ${service}`);
+    const body = encodeURIComponent(`Nafn: ${name}\nNetfang: ${email}\nTegund myndatöku: ${service}\n\n${message}`);
+    window.location.href = `mailto:hello@valthr.com?subject=${subject}&body=${body}`;
+  });
+</script>
+
+</body>
+</html>
