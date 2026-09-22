@@ -169,6 +169,21 @@
   .strip h3{font-size:30px;text-transform:uppercase;margin-bottom:8px;}
   .strip p{font-size:14px;color:var(--grey);font-family:'Inter',sans-serif;line-height:1.6;}
 
+  /* ABOUT */
+  #about{background:var(--black-soft);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
+  #about .container{display:grid;grid-template-columns:0.8fr 1.2fr;gap:64px;align-items:center;}
+  .about-photo{
+    aspect-ratio:4/5;background:linear-gradient(160deg,#1c1c1c,#0d0d0d);
+    border:1px solid var(--grey-line);display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .about-photo img{width:100%;height:100%;object-fit:cover;}
+  .about-text h2{font-size:clamp(38px,6vw,64px);text-transform:uppercase;line-height:1;margin-bottom:24px;}
+  .about-lede{color:var(--white);font-size:20px;line-height:1.6;font-family:'Inter',sans-serif;font-weight:500;margin-bottom:20px;}
+  .about-text p{color:var(--grey);font-size:16px;line-height:1.75;font-family:'Inter',sans-serif;margin-bottom:18px;}
+  .about-text strong{color:var(--white);font-weight:600;}
+  .about-signature{margin-top:22px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.05em;color:var(--white);}
+
   /* CONTACT */
   #contact .container{
     display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:start;
@@ -220,6 +235,8 @@
     .strip{grid-template-columns:repeat(2,1fr);}
     .strip div{border-bottom:1px solid var(--grey-line);}
     #contact .container{grid-template-columns:1fr;}
+    #about .container{grid-template-columns:1fr;}
+    .about-photo{max-width:320px;margin:0 auto;}
   }
   @media (max-width:520px){
     .gallery{grid-template-columns:1fr;}
@@ -235,6 +252,7 @@
     <div class="nav-links" id="navLinks">
       <a href="#portfolio">Myndasafn</a>
       <a href="#services">Þjónusta</a>
+      <a href="#about">Um mig</a>
       <a href="#contact" class="nav-cta">Bóka</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Opna valmynd">&#9776;</button>
@@ -281,6 +299,25 @@
     <div><h3>Liðsmyndir</h3><p>Leikmannahópar, andlitsmyndir og hópmyndir fyrir lið, félög og fyrirtæki.</p></div>
     <div><h3>Mót</h3><p>Myndataka á mótum og keppnum, frá upphafi til enda.</p></div>
     <div><h3>Einstaklingsmyndir</h3><p>Sérsniðnar myndatökur fyrir leikmenn, umboðsmenn og styrktaraðila.</p></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-photo">
+      <img src="assets/valthor.jpg" alt="Valþór Pétursson">
+    </div>
+    <div class="about-text">
+      <span class="section-tag">Ljósmyndarinn</span>
+      <h2>Um mig</h2>
+      <p class="about-lede">Ég heiti Valþór Pétursson og er ljósmyndari frá Njarðvík.</p>
+      <p>Ég er að stíga mín fyrstu skref í ljósmyndun og hef sérstaklega mikinn áhuga á <strong>íþrótta- og viðburðaljósmyndun</strong>.</p>
+      <p>Áhugi minn á ljósmyndun hefur vaxið hratt og finnst mér sérstaklega skemmtilegt að fanga augnablikin sem gerast á sekúndubroti. Í íþróttum getur allt gerst á örskotsstundu – skotið, markið, fögnuðurinn, spennan eða tilfinningarnar eftir leik. Það eru augnablikin sem ég vil ná.</p>
+      <p>Ég hef sjálfur mikinn áhuga á íþróttum og hef tengsl við íþróttastarf í Njarðvík. Það hefur gefið mér tækifæri til að vera nálægt leiknum og sjá hversu mikið myndir geta skipt máli fyrir leikmenn, lið, félög og fólkið í kringum þau.</p>
+      <p>Ég hef einnig áhuga á að mynda viðburði og annað þar sem hægt er að fanga stemninguna, fólkið og litlu augnablikin sem gera daginn eftirminnilegan.</p>
+      <p>VALTHR er verkefni sem ég er að byggja upp frá grunni. Ég er enn að læra, prófa mig áfram og þróa minn eigin stíl – og það er einmitt það sem mér finnst skemmtilegast við ljósmyndun.</p>
+      <p class="about-signature">— Valþór</p>
+    </div>
   </div>
 </section>
 
@@ -340,6 +377,7 @@
     <div class="footer-links">
       <a href="#portfolio">Myndasafn</a>
       <a href="#services">Þjónusta</a>
+      <a href="#about">Um mig</a>
       <a href="#contact">Samband</a>
     </div>
     <span class="copyright">&copy; <span id="year"></span> VALTHR. Öll réttindi áskilin.</span>
