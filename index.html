@@ -73,31 +73,26 @@
   /* HERO */
   .hero{
     position:relative;min-height:100vh;display:flex;align-items:center;
-    justify-content:center;text-align:center;padding:140px 24px 80px;
+    justify-content:flex-start;text-align:left;padding:140px 0 80px;
     background:
       linear-gradient(180deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.78) 45%, var(--black) 100%),
       url('assets/portfolio/10.jpg') center 25% / cover no-repeat;
   }
-  .hero::before{
-    content:'';position:absolute;inset:0;
-    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 90px);
-    pointer-events:none;
-  }
-  .hero-inner{position:relative;z-index:2;max-width:900px;}
+  .hero-inner{position:relative;z-index:2;}
   .eyebrow{
     display:inline-block;font-size:13px;letter-spacing:0.35em;color:var(--grey);
     text-transform:uppercase;margin-bottom:22px;font-family:'Inter',sans-serif;font-weight:600;
   }
   .hero h1{
-    font-size:clamp(56px,10vw,140px);line-height:0.92;color:var(--white);
+    font-size:clamp(48px,9vw,116px);line-height:0.92;color:var(--white);
     text-transform:uppercase;
   }
   .hero h1 span{color:var(--grey);}
   .hero p{
-    margin:26px auto 40px;max-width:560px;font-size:18px;color:var(--grey);
+    margin:26px 0 40px;max-width:520px;font-size:18px;color:var(--grey);
     font-family:'Inter',sans-serif;line-height:1.6;
   }
-  .hero-ctas{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .hero-ctas{display:flex;gap:18px;justify-content:flex-start;flex-wrap:wrap;}
   .btn{
     display:inline-block;padding:16px 34px;font-size:18px;border:1px solid var(--white);
     transition:all .25s ease;
@@ -107,15 +102,13 @@
   .btn-outline{color:var(--white);}
   .btn-outline:hover{background:var(--white);color:var(--black);}
   .scroll-cue{
-    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    position:absolute;bottom:36px;left:32px;
     font-size:12px;letter-spacing:0.3em;color:var(--grey);text-transform:uppercase;
-    font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
   }
   .scroll-cue::after{
     content:'';width:1px;height:40px;background:linear-gradient(var(--grey),transparent);
-    animation:scrollpulse 2s ease infinite;
   }
-  @keyframes scrollpulse{0%{opacity:0.2;}50%{opacity:1;}100%{opacity:0.2;}}
 
   /* SECTION HEADER */
   .section{padding:120px 0;}
@@ -259,7 +252,7 @@
 </header>
 
 <section class="hero" id="top">
-  <div class="hero-inner">
+  <div class="hero-inner container">
     <span class="eyebrow">Íþróttaljósmyndun</span>
     <h1>FRYSTU<br><span>AUGNABLIKIÐ.</span></h1>
     <p>VALTHR fangar augnablikin sem skipta máli — tilfinningarnar, stemninguna og sögurnar sem verða til á vellinum.</p>
@@ -287,7 +280,6 @@
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="section-tag">Það sem ég mynda</span>
         <h2>Þjónusta</h2>
       </div>
     </div>
@@ -321,7 +313,6 @@
 <section class="section" id="contact">
   <div class="container">
     <div class="contact-info">
-      <span class="section-tag">Hafðu samband</span>
       <h2>Bóka myndatöku</h2>
       <p>Er leikur, mót eða viðburður fram undan? Sendu upplýsingarnar og ég hef samband.</p>
 
