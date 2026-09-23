@@ -3,8 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VALTHR | Íþróttaljósmyndun</title>
-<meta name="description" content="Íþróttaljósmyndun eftir Valþór Pétursson — myndasafn og bókanir.">
+<title>VALTHR | Íþrótta- og viðburðaljósmyndun á Íslandi</title>
+<meta name="description" content="Íþrótta- og viðburðaljósmyndun eftir Valþór Pétursson í Njarðvík — skoðaðu myndasafnið eða bókaðu tíma.">
+<link rel="canonical" href="https://valthr.com/">
+<meta name="theme-color" content="#0a0a0a">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://valthr.com/">
+<meta property="og:site_name" content="VALTHR">
+<meta property="og:title" content="VALTHR | Íþrótta- og viðburðaljósmyndun á Íslandi">
+<meta property="og:description" content="Íþrótta- og viðburðaljósmyndun eftir Valþór Pétursson í Njarðvík — skoðaðu myndasafnið eða bókaðu tíma.">
+<meta property="og:image" content="https://valthr.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="is_IS">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VALTHR | Íþrótta- og viðburðaljósmyndun á Íslandi">
+<meta name="twitter:description" content="Íþrótta- og viðburðaljósmyndun eftir Valþór Pétursson í Njarðvík — skoðaðu myndasafnið eða bókaðu tíma.">
+<meta name="twitter:image" content="https://valthr.com/assets/og-image.jpg">
+
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="assets/favicon-16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
 <style>
   @font-face{
     font-family:'Bebas Neue';
@@ -132,6 +154,7 @@
   #portfolio{background:var(--black-soft);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
   .gallery{
     display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    list-style:none;
   }
   .gallery-item{
     position:relative;aspect-ratio:4/5;overflow:hidden;
@@ -245,6 +268,19 @@
     .gallery{grid-template-columns:1fr;}
     .strip{grid-template-columns:1fr;}
   }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--white);outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -283,7 +319,7 @@
       </div>
       <p>Myndir sem ég hef tekið undanfarið — af leikjum, liðum og viðburðum.</p>
     </div>
-    <div class="gallery" id="gallery"></div>
+    <ul class="gallery" id="gallery"></ul>
   </div>
 </section>
 
@@ -306,7 +342,7 @@
 <section class="section" id="about">
   <div class="container">
     <div class="about-photo">
-      <img src="assets/valthor.jpg" alt="Valþór Pétursson">
+      <img src="assets/valthor.jpg" width="675" height="1200" alt="Valþór Pétursson" loading="lazy" decoding="async">
     </div>
     <div class="about-text">
       <h2>Um mig</h2>
@@ -368,7 +404,7 @@
         <textarea id="message" name="message" placeholder="Dagsetning, staðsetning, lið/íþróttamaður og allt annað sem ég ætti að vita."></textarea>
       </div>
       <button type="submit" class="btn">Senda fyrirspurn</button>
-      <span class="form-note" id="formNote">Sent beint til mín — ég svara eins fljótt og ég get.</span>
+      <span class="form-note" id="formNote" role="status" aria-live="polite">Sent beint til mín — ég svara eins fljótt og ég get.</span>
     </form>
   </div>
 </section>
@@ -382,6 +418,7 @@
       <a href="#about">Um mig</a>
       <a href="#contact">Samband</a>
       <a href="personuvernd.html">Persónuvernd</a>
+      <a href="skilmalar.html">Skilmálar</a>
     </div>
     <span class="copyright">&copy; <span id="year"></span> VALTHR</span>
   </div>
@@ -396,17 +433,26 @@
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
   const photos = [
-    "assets/portfolio/01.jpg", "assets/portfolio/02.jpg", "assets/portfolio/03.jpg",
-    "assets/portfolio/04.jpg", "assets/portfolio/05.jpg", "assets/portfolio/06.jpg",
-    "assets/portfolio/07.jpg", "assets/portfolio/08.jpg", "assets/portfolio/09.jpg",
-    "assets/portfolio/10.jpg", "assets/portfolio/11.jpg", "assets/portfolio/12.jpg"
+    { src: "assets/portfolio/01.jpg", w: 900,  h: 1600 },
+    { src: "assets/portfolio/02.jpg", w: 1066, h: 1600 },
+    { src: "assets/portfolio/03.jpg", w: 1066, h: 1600 },
+    { src: "assets/portfolio/04.jpg", w: 1600, h: 1066 },
+    { src: "assets/portfolio/05.jpg", w: 1066, h: 1600 },
+    { src: "assets/portfolio/06.jpg", w: 1600, h: 1066 },
+    { src: "assets/portfolio/07.jpg", w: 1066, h: 1600 },
+    { src: "assets/portfolio/08.jpg", w: 1600, h: 1066 },
+    { src: "assets/portfolio/09.jpg", w: 1066, h: 1600 },
+    { src: "assets/portfolio/10.jpg", w: 1600, h: 1066 },
+    { src: "assets/portfolio/11.jpg", w: 1600, h: 1066 },
+    { src: "assets/portfolio/12.jpg", w: 1066, h: 1600 }
   ];
   const gallery = document.getElementById('gallery');
-  photos.forEach((src, i) => {
-    const item = document.createElement('div');
+  photos.forEach((photo, i) => {
+    const { src, w, h } = photo || {};
+    const item = document.createElement('li');
     item.className = 'gallery-item' + (src ? ' has-img' : '');
     if (src) {
-      item.innerHTML = `<img src="${src}" alt="VALTHR mynd ${i + 1}">
+      item.innerHTML = `<img src="${src}" width="${w}" height="${h}" alt="VALTHR mynd ${i + 1}" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span>Skoða</span></div>`;
     } else {
       item.innerHTML = `<div class="placeholder-mark"><span class="num">${String(i + 1).padStart(2, '0')}</span><small>Bæta við mynd</small></div>`;
