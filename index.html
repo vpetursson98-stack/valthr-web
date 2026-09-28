@@ -429,39 +429,26 @@
   navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-  const photos = [
-    { src: "assets/portfolio/13.jpg", w: 1600, h: 1600 },
-    { src: "assets/portfolio/14.jpg", w: 1600, h: 1600 },
-    { src: "assets/portfolio/15.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/16.jpg", w: 1600, h: 1600 },
-    { src: "assets/portfolio/17.jpg", w: 1600, h: 1600 },
-    { src: "assets/portfolio/18.jpg", w: 1600, h: 1600 },
-    { src: "assets/portfolio/19.jpg", w: 1600, h: 1600 },
-    { src: "assets/portfolio/20.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/02.jpg", w: 1066, h: 1600 },
-    { src: "assets/portfolio/03.jpg", w: 1066, h: 1600 },
-    { src: "assets/portfolio/04.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/05.jpg", w: 1066, h: 1600 },
-    { src: "assets/portfolio/06.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/08.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/09.jpg", w: 1066, h: 1600 },
-    { src: "assets/portfolio/10.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/11.jpg", w: 1600, h: 1066 },
-    { src: "assets/portfolio/12.jpg", w: 1066, h: 1600 }
-  ];
   const gallery = document.getElementById('gallery');
-  photos.forEach((photo, i) => {
-    const { src, w, h } = photo || {};
-    const item = document.createElement('li');
-    item.className = 'gallery-item' + (src ? ' has-img' : '');
-    if (src) {
-      item.innerHTML = `<img src="${src}" width="${w}" height="${h}" alt="VALTHR mynd ${i + 1}" loading="lazy" decoding="async">
-        <div class="gallery-overlay"><span>Skoða</span></div>`;
-    } else {
-      item.innerHTML = `<div class="placeholder-mark"><span class="num">${String(i + 1).padStart(2, '0')}</span><small>Bæta við mynd</small></div>`;
-    }
-    gallery.appendChild(item);
-  });
+  fetch('photos.json')
+    .then(res => res.json())
+    .then(photos => {
+      photos.forEach((photo, i) => {
+        const { src, w, h } = photo || {};
+        const item = document.createElement('li');
+        item.className = 'gallery-item' + (src ? ' has-img' : '');
+        if (src) {
+          item.innerHTML = `<img src="${src}" width="${w}" height="${h}" alt="VALTHR mynd ${i + 1}" loading="lazy" decoding="async">
+            <div class="gallery-overlay"><span>Skoða</span></div>`;
+        } else {
+          item.innerHTML = `<div class="placeholder-mark"><span class="num">${String(i + 1).padStart(2, '0')}</span><small>Bæta við mynd</small></div>`;
+        }
+        gallery.appendChild(item);
+      });
+    })
+    .catch(() => {
+      gallery.innerHTML = '<li style="color:var(--grey);grid-column:1/-1;">Ekki tókst að sækja myndasafnið.</li>';
+    });
 
   const bookingForm = document.getElementById('bookingForm');
   const formNote = document.getElementById('formNote');
